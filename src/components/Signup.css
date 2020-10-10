@@ -1,0 +1,33 @@
+.signup {
+  width: 80%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.signup input {
+  flex-basis: 25px;
+  margin-top: 4.5%;
+  color: #5c7093;
+  border-style: solid;
+  border-color: #7dd6b8;
+  outline-color: #47c5c1;
+}
+
+.signup input:first-child,
+.signup input:nth-child(2),
+.signup input:nth-child(3) {
+  width: 60%;
+}
+
+.signup input:last-child {
+  width: 30%;
+  background-color: #47c5c1;
+  color: #f9f8e6;
+  cursor: pointer;
+}
+
+.signup input::placeholder {
+  color: rgba(92, 112, 147, 0.5);
+}

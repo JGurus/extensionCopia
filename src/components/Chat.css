@@ -1,0 +1,44 @@
+.chat {
+  height: 250px;
+}
+
+.cabecera,
+.enviar {
+  height: 10%;
+}
+
+.mensaje {
+  height: 80%;
+}
+
+.cabecera {
+  background-color: #5c7093;
+}
+
+.enviar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #5c7093;
+}
+
+.enviar input[type="text"] {
+  flex-basis: 80%;
+  outline: none;
+  color: #5c7093;
+  border: none;
+  background: transparent;
+  height: 100%;
+  padding-left: 10px;
+}
+
+.enviar input[type="text"]::placeholder {
+  color: rgba(92, 112, 147, 0.5);
+}
+
+.enviar input[type="submit"] {
+  background-color: #5c7093;
+  border: none;
+  color: #f9f8e6;
+  height: 100%;
+}

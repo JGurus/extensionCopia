@@ -1,0 +1,28 @@
+nav {
+  height: 50px;
+  background-color: #47c5c1;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  float: right;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  color: #f9f8e6;
+}
+
+ul li {
+  padding: 0 10px;
+  cursor: pointer;
+}
+
+ul li:first-child {
+  border-right: 1px solid #f9f8e6;
+}
+
+ul li:hover {
+  color: #5c7093;
+}
