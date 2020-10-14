@@ -1,12 +1,17 @@
 import React from "react";
 import "./NavBar.css";
+import { NavLink } from "react-router-dom";
 
 function NavBar() {
   return (
     <nav>
       <ul>
-        <li>Iniciar Sesión</li>
-        <li>Registrarse</li>
+        <NavLink activeClassName="active" className="li" to="/login">
+          Iniciar Sesión
+        </NavLink>
+        <NavLink activeClassName="active" className="li" to="/signup">
+          Registrarse
+        </NavLink>
       </ul>
     </nav>
   );

@@ -1,6 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./Chat.css";
+import { socket } from "../Socket";
 function Chat() {
+  useEffect(() => {
+    console.log(process.env.REACT_APP_BACKEND_URL);
+    socket.emit("connected");
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      socket.off();
+    };
+  }, []);
   return (
     <div className="chat">
       <div className="cabecera"></div>

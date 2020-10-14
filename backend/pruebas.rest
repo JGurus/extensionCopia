@@ -1,0 +1,14 @@
+POST http://localhost:4000/api/auth/login 
+Content-Type: application/json
+
+{
+  "usuario" : "jordandev", 
+  "contrasenia" : "123456"
+}
+
+###
+
+POST http://localhost:4000/api/auth/signup
+Content-Type: application/json
+
+{}
