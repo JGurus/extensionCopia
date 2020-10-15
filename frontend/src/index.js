@@ -4,10 +4,13 @@ import App from "./App";
 import "normalize.css";
 import "./index.css";
 import * as serviceWorker from "./serviceWorker";
+import AuthState from "./context/auth/authState";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <AuthState>
+      <App />
+    </AuthState>
   </React.StrictMode>,
   document.getElementById("root")
 );

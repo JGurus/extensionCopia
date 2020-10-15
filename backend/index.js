@@ -1,9 +1,11 @@
 const express = require("express");
 const app = express();
+require("dotenv").config();
 const morgan = require("morgan");
+const connectDB = require("./database");
 const http = require("http").createServer(app);
 const io = require("socket.io")(http);
-
+connectDB();
 app.use(morgan("dev"));
 app.use(express.json({ extended: true }));
 

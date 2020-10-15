@@ -3,7 +3,15 @@ nav {
   background-color: #47c5c1;
 }
 
-ul {
+nav .img {
+  height: 30px;
+  width: 30px;
+  float: left;
+  padding-top: 2.5px;
+  padding-left: 30px;
+}
+
+nav ul {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -14,20 +22,20 @@ ul {
   color: #f9f8e6;
 }
 
-ul .li {
+nav ul .li {
   padding: 0 10px;
   text-decoration: none;
   color: white;
   cursor: pointer;
 }
 
-ul .li:first-child {
+nav ul .li:first-child {
   border-right: 1px solid #f9f8e6;
 }
 
-ul .li:hover {
+nav ul .li:hover {
   color: #5c7093;
 }
-ul .active {
+nav ul .active {
   color: #5c7093;
 }

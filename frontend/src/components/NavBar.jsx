@@ -5,6 +5,10 @@ import { NavLink } from "react-router-dom";
 function NavBar() {
   return (
     <nav>
+      <NavLink className="img" to="/">
+        <img src="logo.svg" alt="logo" />
+      </NavLink>
+
       <ul>
         <NavLink activeClassName="active" className="li" to="/login">
           Iniciar Sesión
