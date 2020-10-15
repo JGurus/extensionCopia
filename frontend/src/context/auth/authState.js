@@ -1,13 +1,14 @@
 import React, { useReducer } from "react";
+import AuthContext from "./authContext";
 import AuthReducer from "./authReducer";
 import clienteAxios from "../../config/axios";
 import { SIGNUP_EXIT, LOGIN_EXIT, ERROR } from "../types/index";
-const authState = (props) => {
-  const initialState = {
+const AuthState = (props) => {
+  const stateInicial = {
     user: null,
     authenticate: false,
   };
-  const [state, dispatch] = useReducer(AuthReducer, initialState);
+  const [state, dispatch] = useReducer(AuthReducer, stateInicial);
   const loginAction = async () => {
     try {
       console.log("iniciando sesion");
@@ -17,18 +18,18 @@ const authState = (props) => {
   };
   const signupAction = async (data) => {
     try {
-      const res = await clienteAxios.post("/api/signup", data);
+      const res = await clienteAxios.post("/api/auth/signup", data);
       console.log(res.data);
       dispatch({
         type: SIGNUP_EXIT,
         payload: res.data.msg,
       });
     } catch (error) {
-      console.log(error);
+      console.log(error.response);
     }
   };
   return (
-    <authContext.Provider
+    <AuthContext.Provider
       value={{
         user: state.user,
         authenticate: state.authenticate,
@@ -37,8 +38,8 @@ const authState = (props) => {
       }}
     >
       {props.children}
-    </authContext.Provider>
+    </AuthContext.Provider>
   );
 };
 
-export default authState;
+export default AuthState;

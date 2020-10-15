@@ -5,9 +5,11 @@ const morgan = require("morgan");
 const connectDB = require("./database");
 const http = require("http").createServer(app);
 const io = require("socket.io")(http);
+const cors = require("cors");
 connectDB();
 app.use(morgan("dev"));
 app.use(express.json({ extended: true }));
+app.use(cors());
 
 io.on("connection", (socket) => {
   socket.on("connected", () => {
