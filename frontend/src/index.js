@@ -5,11 +5,14 @@ import "normalize.css";
 import "./index.css";
 import * as serviceWorker from "./serviceWorker";
 import AuthState from "./context/auth/authState";
+import AlertState from "./context/alert/alertState";
 
 ReactDOM.render(
   <React.StrictMode>
     <AuthState>
-      <App />
+      <AlertState>
+        <App />
+      </AlertState>
     </AuthState>
   </React.StrictMode>,
   document.getElementById("root")

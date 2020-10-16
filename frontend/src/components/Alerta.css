@@ -1,0 +1,41 @@
+.error {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  height: 50px;
+  width: 100px;
+  background-color: #ff4848;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: alerta 2s;
+}
+.exito {
+  position: absolute;
+  right: 0;
+  height: 50px;
+  width: 100px;
+  background-color: #44ff47;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: alerta 2s;
+}
+
+p {
+  color: #f9f8e6;
+  text-align: center;
+}
+
+@keyframes alerta {
+  0%,
+  100% {
+    opacity: 0;
+  }
+
+  25%,
+  75% {
+    opacity: 1;
+  }
+}

@@ -13,11 +13,6 @@
   border-style: solid;
   border-color: #7dd6b8;
   outline-color: #47c5c1;
-}
-
-.signup input:first-child,
-.signup input:nth-child(2),
-.signup input:nth-child(3) {
   width: 60%;
 }
 

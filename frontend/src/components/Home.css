@@ -1,6 +1,6 @@
 .home {
-  height: 80vh;
-  width: 100vw;
+  height: 200px;
+  width: 500px;
   position: absolute;
   display: flex;
   justify-content: center;
