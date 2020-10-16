@@ -1,12 +1,25 @@
 const bcrypt = require("bcryptjs");
 const User = require("../models/user");
+const setToken = require("../helpers/setToken");
 const { validationResult } = require("express-validator");
 exports.login = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty())
     return res.status(401).json({ msg: errors.errors[0].msg });
-
-  res.json({ msg: "validando" });
+  const { usuario, contrasenia } = req.body;
+  try {
+    const userDb = await User.findOne({ usuario });
+    if (!userDb) return res.status(404).json({ msg: "Este usuario no existe" });
+    const contraseniaCorrecta = await bcrypt.compare(
+      contrasenia,
+      userDb.contrasenia
+    );
+    if (!contraseniaCorrecta)
+      return res.status(401).json({ msg: "Contraseña incorrecta" });
+    setToken(res, userDb._id);
+  } catch (error) {
+    res.status(500).json({ msg: "Hubo un error" });
+  }
 };
 
 exports.register = async (req, res) => {
@@ -29,7 +42,17 @@ exports.register = async (req, res) => {
     await newuser.save();
     res.status(200).json({ msg: "Usuario Registrado" });
   } catch (error) {
-    console.log(error);
     res.status(500).json({ msg: "Hubo un error" });
+  }
+};
+
+exports.getUser = async (req, res) => {
+  console.log(req.usuario);
+  try {
+    const usuario = await User.findById(req.usuario).select("-contrasenia");
+    if (!usuario) return res.status(404).json({ msg: "Usuario no encontrado" });
+    res.status(200).json({ usuario });
+  } catch (error) {
+    res.status(500).json("Hubo un error");
   }
 };

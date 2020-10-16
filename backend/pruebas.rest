@@ -3,7 +3,7 @@ Content-Type: application/json
 
 {
   "usuario" : "jordandev", 
-  "contrasenia" : "123456"
+  "contrasenia" : "jordan231101r"
 }
 
 ###
@@ -17,3 +17,6 @@ Content-Type: application/json
   "contrasenia" : "joel123456"
 }
 
+###
+GET http://localhost:4000/api/auth/user
+x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjoiNWY4NzhjODYxYzBhM2UxMjM0ZTY4OThmIiwiaWF0IjoxNjAyODE1OTc0LCJleHAiOjE2MDI4MjMxNzR9.hdam00IE_ywzQ0jaPwgDZyiQBPo14J_MIMQmwYC8MvQ

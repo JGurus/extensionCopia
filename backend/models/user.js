@@ -10,6 +10,7 @@ const userSchema = new Schema({
     trim: true,
   },
   admin: { type: Boolean, default: false },
+  active: { type: Boolean, default: false },
   contrasenia: { type: String, required: true },
 });
 module.exports = model("User", userSchema);

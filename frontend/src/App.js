@@ -5,8 +5,12 @@ import Login from "./components/Login";
 import Signup from "./components/Signup";
 import Chat from "./components/Chat";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import tokenAuht from "./config/token";
 import Home from "./components/Home";
-
+const token = localStorage.getItem("token");
+if (token) {
+  tokenAuht(token);
+}
 function App() {
   return (
     <Router>
