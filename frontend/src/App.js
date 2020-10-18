@@ -7,6 +7,7 @@ import Chat from "./components/Chat";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import tokenAuht from "./config/token";
 import Home from "./components/Home";
+import RutaPrivada from "./components/Ruta/RutaPrivada";
 const token = localStorage.getItem("token");
 if (token) {
   tokenAuht(token);
@@ -19,7 +20,7 @@ function App() {
         <Route path="/" component={Home} exact />
         <Route path="/login" component={Login} exact />
         <Route path="/signup" component={Signup} exact />
-        <Route path="/messages" component={Chat} exact />
+        <RutaPrivada path="/messages" component={Chat} exact />
       </Switch>
     </Router>
   );
