@@ -47,7 +47,7 @@ exports.register = async (req, res) => {
 };
 
 exports.getUser = async (req, res) => {
-  console.log(req.usuario);
+  console.log(req.usuario, "hola");
   try {
     const usuario = await User.findById(req.usuario).select("-contrasenia");
     if (!usuario) return res.status(404).json({ msg: "Usuario no encontrado" });

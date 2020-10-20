@@ -3,6 +3,7 @@ import AuthContext from "./authContext";
 import AuthReducer from "./authReducer";
 import clienteAxios from "../../config/axios";
 import { SIGNUP_EXIT, LOGIN_EXIT, ERROR } from "../types/index";
+import tokenAuth from "../../config/token";
 const AuthState = (props) => {
   const stateInicial = {
     user: null,
@@ -10,6 +11,19 @@ const AuthState = (props) => {
     message: null,
   };
   const [state, dispatch] = useReducer(AuthReducer, stateInicial);
+
+  const getUser = async () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      tokenAuth(token);
+    }
+    try {
+      const res = await clienteAxios.get("/api/auth/user");
+      console.log(res.data);
+    } catch (error) {
+      console.log(error.response.data);
+    }
+  };
   const loginAction = async (data) => {
     try {
       const res = await clienteAxios.post("/api/auth/login", data);
@@ -18,6 +32,7 @@ const AuthState = (props) => {
         type: LOGIN_EXIT,
         payload: res.data.token,
       });
+      getUser();
     } catch (error) {
       console.log(error.response.data);
       const alerta = {
@@ -61,6 +76,7 @@ const AuthState = (props) => {
         message: state.message,
         loginAction,
         signupAction,
+        getUser,
       }}
     >
       {props.children}

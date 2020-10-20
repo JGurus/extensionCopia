@@ -4,7 +4,7 @@ export default (state, action) => {
     case SIGNUP_EXIT:
       return { ...state, message: action.payload };
     case LOGIN_EXIT:
-      localStorage.setItem("token", JSON.stringify(action.payload));
+      localStorage.setItem("token", action.payload);
       return { ...state, authenticate: true };
     case ERROR:
       return { ...state, message: action.payload };
