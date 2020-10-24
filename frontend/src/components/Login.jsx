@@ -3,20 +3,23 @@ import "./Login.css";
 import AlertContext from "../context/alert/alertContext";
 import AuthContext from "../context/auth/authContext";
 import Alerta from "../components/Alerta";
-function Login() {
+function Login(props) {
   const authContext = useContext(AuthContext);
   const alertContext = useContext(AlertContext);
-  const { message, loginAction } = authContext;
+  const { user, message, loginAction } = authContext;
   const { alerta, mostrarAlerta } = alertContext;
   const [data, setData] = useState({
     usuario: "",
     contrasenia: "",
   });
   useEffect(() => {
+    if (user) {
+      props.history.push("/messages");
+    }
     if (message) {
       mostrarAlerta(message.msg, message.categoria);
     }
-  }, [message]);
+  }, [message, user]);
   const login = (e) => {
     e.preventDefault();
     if (!data.usuario.trim()) {

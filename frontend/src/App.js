@@ -1,19 +1,25 @@
-import React from "react";
-import "./App.css";
-import NavBar from "./components/NavBar";
-import Login from "./components/Login";
-import Signup from "./components/Signup";
-import Chat from "./components/Chat";
+import React, { useEffect, useContext } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import tokenAuth from "./config/token";
-import Home from "./components/Home";
+import "./App.css";
 import RutaPrivada from "./components/Ruta/RutaPrivada";
+import Signup from "./components/Signup";
+import NavBar from "./components/NavBar";
+import tokenAuth from "./config/token";
+import Login from "./components/Login";
+import Chat from "./components/Chat";
+import Home from "./components/Home";
+import UserContext from "./context/auth/authContext";
 const token = localStorage.getItem("token");
 if (token) {
   console.log(token);
   tokenAuth(token);
 }
 function App() {
+  const { getUser } = useContext(UserContext);
+  useEffect(() => {
+    getUser();
+    // eslint-disable-next-line
+  }, []);
   return (
     <Router>
       <NavBar />

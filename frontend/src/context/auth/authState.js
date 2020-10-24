@@ -2,7 +2,13 @@ import React, { useReducer } from "react";
 import AuthContext from "./authContext";
 import AuthReducer from "./authReducer";
 import clienteAxios from "../../config/axios";
-import { SIGNUP_EXIT, LOGIN_EXIT, ERROR } from "../types/index";
+import {
+  SIGNUP_EXIT,
+  LOGIN_EXIT,
+  ERROR,
+  OBTENER_USUARIO,
+  CERRAR_SESION,
+} from "../types/index";
 import tokenAuth from "../../config/token";
 const AuthState = (props) => {
   const stateInicial = {
@@ -20,6 +26,10 @@ const AuthState = (props) => {
     try {
       const res = await clienteAxios.get("/api/auth/user");
       console.log(res.data);
+      dispatch({
+        type: OBTENER_USUARIO,
+        payload: res.data.usuario,
+      });
     } catch (error) {
       console.log(error.response.data);
     }
@@ -68,6 +78,11 @@ const AuthState = (props) => {
       });
     }
   };
+  const cerrarSesion = () => {
+    dispatch({
+      type: CERRAR_SESION,
+    });
+  };
   return (
     <AuthContext.Provider
       value={{
@@ -77,6 +92,7 @@ const AuthState = (props) => {
         loginAction,
         signupAction,
         getUser,
+        cerrarSesion,
       }}
     >
       {props.children}
