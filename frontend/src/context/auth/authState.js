@@ -25,13 +25,14 @@ const AuthState = (props) => {
     }
     try {
       const res = await clienteAxios.get("/api/auth/user");
-      console.log(res.data);
       dispatch({
         type: OBTENER_USUARIO,
         payload: res.data.usuario,
       });
     } catch (error) {
-      console.log(error.response.data);
+      dispatch({
+        type: CERRAR_SESION,
+      });
     }
   };
   const loginAction = async (data) => {

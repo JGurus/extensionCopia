@@ -10,10 +10,14 @@ connectDB();
 app.use(cors());
 app.use(morgan("dev"));
 app.use(express.json({ extended: true }));
-
+let userConnected = {};
 io.on("connection", (socket) => {
-  socket.on("connected", () => {
-    console.log("A user connected");
+  socket.on("connected", (usuario) => {
+    userConnected[usuario] = usuario;
+  });
+  socket.on("message", (message) => {
+    socket.broadcast.emit("newmessage", message);
+    console.log(message);
   });
 });
 

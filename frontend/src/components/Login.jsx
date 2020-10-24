@@ -19,7 +19,8 @@ function Login(props) {
     if (message) {
       mostrarAlerta(message.msg, message.categoria);
     }
-  }, [message, user]);
+    //eslint-disable-next-line
+  }, [message, user, props.history]);
   const login = (e) => {
     e.preventDefault();
     if (!data.usuario.trim()) {
