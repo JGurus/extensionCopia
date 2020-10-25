@@ -4,6 +4,7 @@ import { socket } from "../Socket";
 import UserContext from "../context/auth/authContext";
 function Chat() {
   const [mensaje, setMensaje] = useState("");
+  const [mensajes, setMensajes] = useState([]);
   const { user } = useContext(UserContext);
   useEffect(() => {
     socket.emit("connected", user.usuario);
@@ -12,8 +13,9 @@ function Chat() {
   useEffect(() => {
     socket.on("newmessage", (message) => {
       console.log(message);
+      setMensajes([...mensajes, message]);
     });
-  }, []);
+  }, [setMensajes, mensajes]);
 
   useEffect(() => {
     return () => {
@@ -26,13 +28,20 @@ function Chat() {
     if (!mensaje.trim()) {
       return;
     }
+    setMensajes([...mensajes, { mensaje, usuario: user.usuario }]);
     socket.emit("message", { mensaje, usuario: user.usuario });
     setMensaje("");
   };
   return (
     <div className="chat">
       <div className="cabecera"></div>
-      <div className="mensaje"></div>
+      <div className="mensaje">
+        {mensajes.map((msg, index) => (
+          <p key={index}>
+            {msg.mensaje} - {msg.usuario}
+          </p>
+        ))}
+      </div>
       <form
         className="enviar"
         onSubmit={(e) => {

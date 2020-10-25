@@ -9,6 +9,7 @@
 
 .mensaje {
   height: 80%;
+  overflow: auto;
 }
 
 .cabecera {
@@ -41,4 +42,8 @@
   border: none;
   color: #f9f8e6;
   height: 100%;
+}
+
+p {
+  color: black;
 }
