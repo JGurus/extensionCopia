@@ -25,5 +25,6 @@ router.post(
   authController.register
 );
 router.get("/user", auth, authController.getUser);
+router.get("/doc", auth, authController.obtenerDoc);
 
 module.exports = router;

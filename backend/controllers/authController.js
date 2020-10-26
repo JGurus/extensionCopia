@@ -1,6 +1,7 @@
 const bcrypt = require("bcryptjs");
 const User = require("../models/user");
 const setToken = require("../helpers/setToken");
+const Doc = require("../models/Doc");
 const { validationResult } = require("express-validator");
 exports.login = async (req, res) => {
   const errors = validationResult(req);
@@ -16,8 +17,11 @@ exports.login = async (req, res) => {
     );
     if (!contraseniaCorrecta)
       return res.status(401).json({ msg: "Contraseña incorrecta" });
-    setToken(res, userDb._id);
+    if (userDb.active !== true)
+      return res.status(401).json({ msg: "Este usuario no esta activado :(" });
+    setToken(res, userDb._id, userDb.admin);
   } catch (error) {
+    console.log(error);
     res.status(500).json({ msg: "Hubo un error" });
   }
 };
@@ -47,12 +51,24 @@ exports.register = async (req, res) => {
 };
 
 exports.getUser = async (req, res) => {
-  console.log(req.usuario, "hola");
   try {
-    const usuario = await User.findById(req.usuario).select("-contrasenia");
+    const usuario = await User.findById(req.usuario.id).select("-contrasenia");
     if (!usuario) return res.status(404).json({ msg: "Usuario no encontrado" });
     res.status(200).json({ usuario });
   } catch (error) {
+    res.status(500).json("Hubo un error");
+  }
+};
+
+exports.obtenerDoc = async (req, res) => {
+  try {
+    const doc = await Doc.find();
+    if (doc.length < 1) {
+      return res.status(404).json({ msg: "No hay documentos" });
+    }
+    res.status(200).json({ doc });
+  } catch (error) {
+    console.log(error);
     res.status(500).json("Hubo un error");
   }
 };

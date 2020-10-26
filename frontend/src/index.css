@@ -1,5 +1,11 @@
 html {
   font-family: "Josefin Sans", sans-serif;
+  box-sizing: border-box;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
 }
 
 body {

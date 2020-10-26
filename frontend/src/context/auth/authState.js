@@ -8,6 +8,8 @@ import {
   ERROR,
   OBTENER_USUARIO,
   CERRAR_SESION,
+  DOC_EXITO,
+  DOC_ERROR,
 } from "../types/index";
 import tokenAuth from "../../config/token";
 const AuthState = (props) => {
@@ -15,6 +17,7 @@ const AuthState = (props) => {
     user: null,
     authenticate: false,
     message: null,
+    doc: null,
   };
   const [state, dispatch] = useReducer(AuthReducer, stateInicial);
 
@@ -79,6 +82,20 @@ const AuthState = (props) => {
       });
     }
   };
+
+  const obtenerDoc = async () => {
+    try {
+      const res = await clienteAxios.get("/api/auth/doc");
+      dispatch({
+        type: DOC_EXITO,
+        payload: res.data.doc[0].doc,
+      });
+    } catch (error) {
+      dispatch({
+        type: DOC_ERROR,
+      });
+    }
+  };
   const cerrarSesion = () => {
     dispatch({
       type: CERRAR_SESION,
@@ -90,10 +107,12 @@ const AuthState = (props) => {
         user: state.user,
         authenticate: state.authenticate,
         message: state.message,
+        doc: state.doc,
         loginAction,
         signupAction,
         getUser,
         cerrarSesion,
+        obtenerDoc,
       }}
     >
       {props.children}

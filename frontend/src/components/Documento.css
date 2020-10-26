@@ -1,0 +1,40 @@
+.text-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.text-content > button {
+  align-self: flex-end;
+  cursor: pointer;
+  margin: 2.5px 0;
+  border: none;
+  color: #f9f8e6;
+  background-color: #5c7093;
+  outline: none;
+}
+
+.text-content p {
+  margin: 0;
+  padding: 0;
+  color: #5c7093;
+}
+
+.text-content div {
+  display: flex;
+  justify-content: center;
+}
+
+.text-content textarea {
+  outline: none;
+  border: 1px solid #5c7093;
+  color: #5c7093;
+}
+
+.text-content div button {
+  cursor: pointer;
+  border: none;
+  color: #f9f8e6;
+  background-color: #5c7093;
+  margin: 2.5px 10px;
+  outline: none;
+}

@@ -1,13 +1,19 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useRef } from "react";
+import { NavLink } from "react-router-dom";
 import "./Chat.css";
 import { socket } from "../Socket";
 import UserContext from "../context/auth/authContext";
 function Chat() {
   const [mensaje, setMensaje] = useState("");
   const [mensajes, setMensajes] = useState([]);
-  const { user } = useContext(UserContext);
+  const { user, cerrarSesion } = useContext(UserContext);
+  const divRef = useRef(null);
+
   useEffect(() => {
     socket.emit("connected", user.usuario);
+    socket.on("loadMessages", (messages) => {
+      setMensajes(messages);
+    });
   }, [user]);
 
   useEffect(() => {
@@ -15,6 +21,9 @@ function Chat() {
       console.log(message);
       setMensajes([...mensajes, message]);
     });
+    if (divRef.current !== null) {
+      divRef.current.scrollTop = divRef.current.scrollHeight;
+    }
   }, [setMensajes, mensajes]);
 
   useEffect(() => {
@@ -34,12 +43,36 @@ function Chat() {
   };
   return (
     <div className="chat">
-      <div className="cabecera"></div>
-      <div className="mensaje">
+      <div className="cabecera">
+        <ul>
+          {user ? (
+            user.admin === true ? (
+              <NavLink to="/admin">
+                <img src="/images/active.svg" alt="Active" />
+              </NavLink>
+            ) : null
+          ) : null}
+          <NavLink to="/documento">
+            <img src="/images/documento.svg" alt="Documento" />
+          </NavLink>
+          <li
+            onClick={() => {
+              cerrarSesion();
+            }}
+          >
+            <img src="/images/logout.svg" alt="Cerrar Sesión" />
+          </li>
+        </ul>
+      </div>
+      <div className="mensaje" ref={divRef}>
         {mensajes.map((msg, index) => (
-          <p key={index}>
-            {msg.mensaje} - {msg.usuario}
-          </p>
+          <div
+            key={index}
+            id={msg.usuario === user.usuario ? "derecha" : "izquierda"}
+          >
+            <span>{msg.usuario}</span>
+            <p key={index}>{msg.mensaje}</p>
+          </div>
         ))}
       </div>
       <form

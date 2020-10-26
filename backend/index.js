@@ -6,22 +6,34 @@ const connectDB = require("./database");
 const http = require("http").createServer(app);
 const io = require("socket.io")(http);
 const cors = require("cors");
+const Message = require("./models/Messages");
 connectDB();
 app.use(cors());
 app.use(morgan("dev"));
 app.use(express.json({ extended: true }));
 let userConnected = {};
 io.on("connection", (socket) => {
-  socket.on("connected", (usuario) => {
+  socket.on("connected", async (usuario) => {
     userConnected[usuario] = usuario;
+    const mensajes = await Message.find();
+    socket.emit("loadMessages", mensajes);
   });
-  socket.on("message", (message) => {
-    socket.broadcast.emit("newmessage", message);
-    console.log(message);
+  socket.on("message", async (message) => {
+    try {
+      const mensaje = new Message(message);
+      await mensaje.save();
+      socket.broadcast.emit("newmessage", {
+        mensaje: mensaje.mensaje,
+        usuario: mensaje.usuario,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   });
 });
 
 app.use("/api/auth", require("./routes/auth.routes"));
+app.use("/api/admin", require("./routes/admin.routes"));
 
 const port = process.env.PORT || 4000;
 

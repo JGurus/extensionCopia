@@ -6,13 +6,16 @@ import "./index.css";
 import * as serviceWorker from "./serviceWorker";
 import AuthState from "./context/auth/authState";
 import AlertState from "./context/alert/alertState";
+import AdminState from "./context/admin/adminState";
 
 ReactDOM.render(
   <React.StrictMode>
     <AuthState>
-      <AlertState>
-        <App />
-      </AlertState>
+      <AdminState>
+        <AlertState>
+          <App />
+        </AlertState>
+      </AdminState>
     </AuthState>
   </React.StrictMode>,
   document.getElementById("root")

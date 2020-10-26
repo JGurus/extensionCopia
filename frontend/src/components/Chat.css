@@ -1,19 +1,79 @@
 .chat {
   height: 250px;
+  overflow: hidden;
 }
 
 .cabecera,
 .enviar {
-  height: 10%;
+  height: 25px;
 }
 
 .mensaje {
-  height: 80%;
+  height: 200px;
   overflow: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.mensaje > div {
+  /* background-color: blue; */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #5c7093;
+  margin: 1% 1% 0 1%;
+  border-radius: 20px;
+  max-width: 60%;
+}
+
+#derecha {
+  align-self: flex-end;
+  border-bottom-right-radius: 0;
+}
+
+#izquierda {
+  border-bottom-left-radius: 0;
+}
+
+.mensaje > div > p {
+  margin: 2px 0 0 0;
+  padding: 0 10px;
+  color: #5c7093;
+}
+
+.mensaje > div > span {
+  font-size: 0.7rem;
+  color: #f9f8e6;
+  border-radius: 20px 20px 0 0;
+  padding: 0 10px;
+  background-color: #5c7093;
+  align-self: stretch;
+  text-align: center;
 }
 
 .cabecera {
   background-color: #5c7093;
+}
+
+.cabecera img {
+  height: 20px;
+  width: 20px;
+  padding-top: 2px;
+  cursor: pointer;
+  cursor: pointer;
+  cursor: pointer;
+  cursor: pointer;
+}
+
+.cabecera ul {
+  float: right;
+  width: 25%;
+  height: 100%;
+  list-style: none;
+  display: flex;
+  justify-content: space-around;
 }
 
 .enviar {
@@ -29,7 +89,6 @@
   color: #5c7093;
   border: none;
   background: transparent;
-  height: 100%;
   padding-left: 10px;
 }
 
@@ -41,9 +100,5 @@
   background-color: #5c7093;
   border: none;
   color: #f9f8e6;
-  height: 100%;
-}
-
-p {
-  color: black;
+  height: 25px;
 }

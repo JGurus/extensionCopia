@@ -1,9 +1,11 @@
 import React, { useContext } from "react";
 import "./NavBar.css";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import UserContext from "../context/auth/authContext";
 function NavBar() {
   const { user, cerrarSesion } = useContext(UserContext);
+  const location = useLocation();
+  if (location.pathname === "/messages") return null;
   return (
     <nav>
       <NavLink className="img" to="/">
@@ -12,13 +14,12 @@ function NavBar() {
       <ul>
         {user ? (
           <button
+            className="li"
             onClick={() => {
               cerrarSesion();
             }}
-            className="li"
-            to="/login"
           >
-            Cerrar Sesión
+            Cerrar Sesion
           </button>
         ) : (
           <>
@@ -26,7 +27,7 @@ function NavBar() {
               Iniciar Sesión
             </NavLink>
             <NavLink activeClassName="active" className="li" to="/signup">
-              Registrarse
+              Registrarte
             </NavLink>
           </>
         )}
