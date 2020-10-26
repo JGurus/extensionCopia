@@ -5,7 +5,6 @@ const Doc = require("../models/Doc");
 const Sesion = require("../models/Sesiones");
 const { validationResult } = require("express-validator");
 const Sesiones = require("../models/Sesiones");
-const { findByIdAndRemove } = require("../models/user");
 exports.login = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty())
@@ -22,10 +21,10 @@ exports.login = async (req, res) => {
       return res.status(401).json({ msg: "Contraseña incorrecta" });
     if (userDb.active !== true)
       return res.status(401).json({ msg: "Este usuario no esta activado :(" });
-    const sesion = await Sesion.findOne({ user: usuario });
+    const sesion = await Sesion.findOne({ user: usuario.toLowerCase() });
     if (sesion)
       return res.status(401).json({ msg: "ya estas activo en otro pc" });
-    const newSesion = Sesiones({ user: usuario });
+    const newSesion = Sesiones({ user: usuario.toLowerCase() });
     await newSesion.save();
     setToken(res, userDb._id, userDb.admin, userDb.usuario);
   } catch (error) {
