@@ -2,7 +2,10 @@ const bcrypt = require("bcryptjs");
 const User = require("../models/user");
 const setToken = require("../helpers/setToken");
 const Doc = require("../models/Doc");
+const Sesion = require("../models/Sesiones");
 const { validationResult } = require("express-validator");
+const Sesiones = require("../models/Sesiones");
+const { findByIdAndRemove } = require("../models/user");
 exports.login = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty())
@@ -19,7 +22,12 @@ exports.login = async (req, res) => {
       return res.status(401).json({ msg: "Contraseña incorrecta" });
     if (userDb.active !== true)
       return res.status(401).json({ msg: "Este usuario no esta activado :(" });
-    setToken(res, userDb._id, userDb.admin);
+    const sesion = await Sesion.findOne({ user: usuario });
+    if (sesion)
+      return res.status(401).json({ msg: "ya estas activo en otro pc" });
+    const newSesion = Sesiones({ user: usuario });
+    await newSesion.save();
+    setToken(res, userDb._id, userDb.admin, userDb.usuario);
   } catch (error) {
     console.log(error);
     res.status(500).json({ msg: "Hubo un error" });
@@ -70,5 +78,16 @@ exports.obtenerDoc = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).json("Hubo un error");
+  }
+};
+
+exports.cerrarSesion = async (req, res) => {
+  try {
+    const sesion = await Sesion.findOneAndRemove({
+      user: req.usuario.name,
+    });
+    res.status(200).json({ msg: "ha cerrado sesion" });
+  } catch (error) {
+    res.status(500).json({ msg: "Hubo un error" });
   }
 };

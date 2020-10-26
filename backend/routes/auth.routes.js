@@ -26,5 +26,6 @@ router.post(
 );
 router.get("/user", auth, authController.getUser);
 router.get("/doc", auth, authController.obtenerDoc);
+router.delete("/", auth, authController.cerrarSesion);
 
 module.exports = router;

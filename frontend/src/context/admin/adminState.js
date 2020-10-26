@@ -19,13 +19,11 @@ const AdminState = (props) => {
   const obtenerUsuarios = async () => {
     try {
       const res = await clienteAxios.get("/api/admin/");
-      console.log(res.data);
       dispatch({
         type: OBTENER_USUARIO,
         payload: res.data.listUser,
       });
     } catch (error) {
-      console.log(error.response);
       dispatch({
         type: OBTENER_USUARIO_ERROR,
       });
@@ -35,7 +33,6 @@ const AdminState = (props) => {
   const activeUser = async (data) => {
     try {
       const res = await clienteAxios.post("/api/admin/active", data);
-      console.log(res.data);
       dispatch({
         type: EDITAR_ACTIVE_EXITO,
         payload: res.data.userDB,
@@ -50,9 +47,13 @@ const AdminState = (props) => {
   const editarDocumento = async (data) => {
     try {
       const res = await clienteAxios.post("/api/admin/doc", data);
-      console.log(res.data);
+      dispatch({
+        type: EDITAR_DOCUMENTO_EXITO,
+      });
     } catch (error) {
-      console.log(error.response);
+      dispatch({
+        type: EDITAR_DOCUMENTO_ERROR,
+      });
     }
   };
   return (

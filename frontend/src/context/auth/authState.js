@@ -41,14 +41,12 @@ const AuthState = (props) => {
   const loginAction = async (data) => {
     try {
       const res = await clienteAxios.post("/api/auth/login", data);
-      console.log(res.data);
       dispatch({
         type: LOGIN_EXIT,
         payload: res.data.token,
       });
       getUser();
     } catch (error) {
-      console.log(error.response.data);
       const alerta = {
         msg: error.response.data.msg,
         categoria: "error",
@@ -62,7 +60,6 @@ const AuthState = (props) => {
   const signupAction = async (data) => {
     try {
       const res = await clienteAxios.post("/api/auth/signup", data);
-      console.log(res.data);
       const alerta = {
         msg: res.data.msg,
         categoria: "exito",
@@ -96,10 +93,17 @@ const AuthState = (props) => {
       });
     }
   };
-  const cerrarSesion = () => {
-    dispatch({
-      type: CERRAR_SESION,
-    });
+  const cerrarSesion = async () => {
+    try {
+      const res = await clienteAxios.delete("/api/auth/");
+      dispatch({
+        type: CERRAR_SESION,
+      });
+    } catch (error) {
+      dispatch({
+        type: DOC_ERROR,
+      });
+    }
   };
   return (
     <AuthContext.Provider
