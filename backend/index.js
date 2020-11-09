@@ -13,6 +13,7 @@ let userConnected = {};
 io.on("connection", (socket) => {
   socket.on("connected", async (usuario) => {
     userConnected[usuario] = usuario;
+    socket.broadcast.emit("userConnected", usuario);
     const mensajes = await Message.find();
     socket.emit("loadMessages", mensajes);
   });

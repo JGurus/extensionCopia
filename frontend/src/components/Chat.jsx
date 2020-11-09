@@ -3,10 +3,13 @@ import { NavLink } from "react-router-dom";
 import "./Chat.css";
 import { socket } from "../Socket";
 import UserContext from "../context/auth/authContext";
+import AlertContext from "../context/alert/alertContext";
+import Alerta from "./Alerta";
 function Chat() {
   const [mensaje, setMensaje] = useState("");
   const [mensajes, setMensajes] = useState([]);
   const { user, cerrarSesion } = useContext(UserContext);
+  const { alerta, mostrarAlerta } = useContext(AlertContext);
   const divRef = useRef(null);
 
   useEffect(() => {
@@ -27,6 +30,11 @@ function Chat() {
   }, [setMensajes, mensajes]);
 
   useEffect(() => {
+    socket.on("userConnected", (usuario) => {
+      mostrarAlerta(`${usuario} se ha conectado`, "exito");
+    });
+  }, []);
+  useEffect(() => {
     return () => {
       socket.off();
     };
@@ -44,6 +52,9 @@ function Chat() {
   return (
     <div className="chat">
       <div className="cabecera">
+        {alerta ? (
+          <Alerta categoria={alerta.categoria} msg={alerta.msg} />
+        ) : null}
         <ul>
           {user ? (
             user.admin === true ? (
@@ -86,9 +97,6 @@ function Chat() {
           name="escribir-mensaje"
           placeholder="Escribe aquí"
           value={mensaje}
-          onChange={(e) => {
-            setMensaje(e.target.value);
-          }}
         />
         <input type="submit" name="enviar-mensaje" />
       </form>
